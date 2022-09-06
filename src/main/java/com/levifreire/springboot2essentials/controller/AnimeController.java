@@ -3,28 +3,38 @@ package com.levifreire.springboot2essentials.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.levifreire.springboot2essentials.domain.Anime;
+import com.levifreire.springboot2essentials.service.AnimeService;
 import com.levifreire.springboot2essentials.util.DateUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
-@RequestMapping("anime")
+@RequestMapping("animes")
 @Log4j2
 @RequiredArgsConstructor
 public class AnimeController {
 
 	private final DateUtil dateUtil;
+	private final AnimeService animeService;
 
-	@GetMapping(path = "list")
-	public List<Anime> list() {
+	@GetMapping
+	public ResponseEntity<List<Anime>> list() {
 		log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-		return List.of(new Anime("Boku No Hero"), new Anime("Berserk"));
+		return ResponseEntity.ok(animeService.listAll());
+	}
+	
+	@GetMapping(path = "/{id}")
+	public ResponseEntity<Anime> findById(@PathVariable long id) {
+		log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+		return ResponseEntity.ok(animeService.findById(id));
 	}
 
 }
