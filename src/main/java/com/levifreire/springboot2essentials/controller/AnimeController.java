@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.levifreire.springboot2essentials.domain.Anime;
+import com.levifreire.springboot2essentials.requests.AnimePostRequestBody;
+import com.levifreire.springboot2essentials.requests.AnimePutRequestBody;
 import com.levifreire.springboot2essentials.service.AnimeService;
 import com.levifreire.springboot2essentials.util.DateUtil;
 
@@ -43,8 +45,8 @@ public class AnimeController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-		return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+	public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+		return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping(path = "/{id}")
@@ -54,8 +56,8 @@ public class AnimeController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Void> replace(@RequestBody Anime anime){
-		animeService.replace(anime);
+	public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody){		
+		animeService.replace(animePutRequestBody);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
