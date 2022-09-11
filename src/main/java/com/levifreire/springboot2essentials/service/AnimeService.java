@@ -2,11 +2,10 @@ package com.levifreire.springboot2essentials.service;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.levifreire.springboot2essentials.domain.Anime;
+import com.levifreire.springboot2essentials.exception.BadRequestException;
 import com.levifreire.springboot2essentials.mapper.AnimeMapper;
 import com.levifreire.springboot2essentials.repository.AnimeRepository;
 import com.levifreire.springboot2essentials.requests.AnimePostRequestBody;
@@ -30,7 +29,7 @@ public class AnimeService {
 
 	public Anime findById(long id) {
 		return animeRepository.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not found"));
+				.orElseThrow(() -> new BadRequestException("Anime not found"));
 	}
 
 	public Anime save(AnimePostRequestBody animePostRequestBody) {
