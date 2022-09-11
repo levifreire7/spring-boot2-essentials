@@ -23,6 +23,10 @@ public class AnimeService {
 	public List<Anime> listAll() {
 		return animeRepository.findAll();
 	}
+	
+	public List<Anime> findByName(String name){
+		return animeRepository.findByName(name);
+	}
 
 	public Anime findById(long id) {
 		return animeRepository.findById(id)
@@ -44,5 +48,6 @@ public class AnimeService {
 
 		animeRepository.save(anime);
 	}
+	
 
 }
