@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.levifreire.springboot2essentials.domain.Anime;
+import com.levifreire.springboot2essentials.mapper.AnimeMapper;
 import com.levifreire.springboot2essentials.repository.AnimeRepository;
 import com.levifreire.springboot2essentials.requests.AnimePostRequestBody;
 import com.levifreire.springboot2essentials.requests.AnimePutRequestBody;
@@ -29,8 +30,7 @@ public class AnimeService {
 	}
 
 	public Anime save(AnimePostRequestBody animePostRequestBody) {
-		Anime anime = Anime.builder().name(animePostRequestBody.getName()).build();
-		return animeRepository.save(anime);
+		return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
 	}
 
 	public void delete(long id) {
@@ -38,12 +38,10 @@ public class AnimeService {
 	}
 
 	public void replace(AnimePutRequestBody animePutRequestBody) {
-		findById(animePutRequestBody.getId());
-		Anime anime = Anime.builder()
-				.id(animePutRequestBody.getId())
-				.name(animePutRequestBody.getName())
-				.build();
-		
+		Anime savedAnime = findById(animePutRequestBody.getId());
+		Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
+		anime.setId(savedAnime.getId());
+
 		animeRepository.save(anime);
 	}
 
