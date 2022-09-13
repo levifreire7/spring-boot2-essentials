@@ -2,6 +2,8 @@ package com.levifreire.springboot2essentials.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.levifreire.springboot2essentials.domain.Anime;
@@ -32,6 +34,7 @@ public class AnimeService {
 				.orElseThrow(() -> new BadRequestException("Anime not found"));
 	}
 
+	@Transactional
 	public Anime save(AnimePostRequestBody animePostRequestBody) {
 		return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
 	}
